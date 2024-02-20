@@ -1,3 +1,6 @@
 <?php
 
-echo "Hello " 
+echo "My first PHP script!";
+
+?>
+
