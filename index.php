@@ -15,7 +15,7 @@
         <div class="login bg-white p-4 rounded shadow">
             <h1 class="text-center mb-4">WebApp Login</h1>
 
-            <form action="./php/auth.php" method="post">
+            <form action="./php/auth.php" method="post" id="formLogin">
                 <input type="text" class="form-control mb-2" name="txtUser" placeholder="Username" id="username">
                 <input type="password" class="form-control mb-2" name="txtPass" placeholder="Password" id="password">
 

@@ -4,7 +4,7 @@ require_once("./_connect.php");
 
 if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']) || !isset($_POST['token']))
 {
-    die("you're dead");
+    die("Incorrect details");
 }
 
 $username = $_POST['txtUser'];
