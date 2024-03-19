@@ -32,38 +32,38 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<script src="https://www.google.com/recaptcha/api.js?render=6LdwAmEpAAAAAFVUlRTHbp4bL3NFswBc5nn53Wal"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld0KZ4pAAAAAFskRX_7jQEYL6At_0wALTzfrsI2"></script>
 
 <script>
 
-    $('form').submit(function (e) {
-        e.preventDefault();
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Ld0KZ4pAAAAAFskRX_7jQEYL6At_0wALTzfrsI2', { action: 'login' } ).then(function (token) {
 
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LdwAmEpAAAAAFVUlRTHbp4bL3NFswBc5nn53Wal', { action: 'login_to_site' } ).then(function (token) {
-                $.ajax({
-                    url: "./php/auth.php",
-                    type: "POST",
-                    data: {
-                        txtUser: $('#username').val(),
-                        txtPass: $('#password').val(),
-                        token: token
-                    },
-                    success: function (res) {
-                        if (res == "true")
-                        {
-                            window.location.href = "./dashboard.php";
+            $('#formLogin').submit(function (event) {
+                    event.preventDefault();
+
+                    $.ajax({
+                        url: './php/auth.php',
+                        type: 'post',
+                        data: {
+                            txtUser: $('input[name="txtUser"]').val(),
+                            txtPass: $('input[name="txtPass"]').val(),
+                            token: token
+                        },
+                        success: function (response) {
+                            if (response == 'true') {
+                                window.location.href = './dashboard.php';
+                            } else {
+                                alert(response);
+                            }
                         }
-                        else
-                        {
-                            alert(res);
-                        }
-                    }
-                })
-            });
+                    });
+                });
+
         });
-    });
+});
 
 </script>
+
 
 </html>

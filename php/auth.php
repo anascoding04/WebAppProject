@@ -11,7 +11,7 @@ $username = $_POST['txtUser'];
 $password = $_POST['txtPass'];
 
 $captcha = $_POST['token'];
-$secretKey = '6LdwAmEpAAAAAOzWh9OPf1L_a6wOyx7QxmInbj4E';
+$secretKey = '6Ld0KZ4pAAAAAAkMdj4K12rJu1bEOO16PDXbu2Oa';
 $reCAPTCHA = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha)));
 
 if ($reCAPTCHA->score <= 0.5)
