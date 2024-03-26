@@ -2,22 +2,24 @@
 
 require_once("./_connect.php");
 
-if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']) || !isset($_POST['token']))
+if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']))
 {
     die("Incorrect details");
 }
 
+// $captcha = $_POST['token'];
+// $secretKey = '6Ld0KZ4pAAAAAAkMdj4K12rJu1bEOO16PDXbu2Oa';
+// $reCAPTCHA = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha)));
+
+// var_dump($reCAPTCHA);
+
+// if ($reCAPTCHA->score <= 0.3)
+// {
+//     die("You are a bot!");
+// }
+
 $username = $_POST['txtUser'];
 $password = $_POST['txtPass'];
-
-$captcha = $_POST['token'];
-$secretKey = '6Ld0KZ4pAAAAAAkMdj4K12rJu1bEOO16PDXbu2Oa';
-$reCAPTCHA = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha)));
-
-if ($reCAPTCHA->score <= 0.5)
-{
-    die("You are a bot!");
-}
 
 $SQL = "SELECT * FROM `users` WHERE `username` = ?";
 
