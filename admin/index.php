@@ -19,7 +19,7 @@
 <body class="vh-100 custom-bg">
     <main class="h-100 d-flex justify-content-center align-items-center">
         <div class="login bg-white p-4 rounded shadow">
-            <h1 class="text-center mb-4">CPD & Staff Training</h1>
+            <h1 class="text-center mb-4">Admin Portal</h1>
 
             <form action="./php/auth.php" method="post" id="formLogin">
                 <input type="text" class="form-control mb-2" name="txtUser" placeholder="ID" id="id">
@@ -34,7 +34,7 @@
             </form>
 
             <div class="text-center mt-3">
-                <a href="admin/" class="btn btn-secondary">Admin Login</a>
+                <a href="../index.php" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </main>
@@ -54,12 +54,12 @@
                     event.preventDefault();
 
                     $.ajax({
-                        url: './php/auth.php',
+                        url: '../php/auth.php',
                         type: 'post',
                         data: {
                             txtUser: $('input[name="txtUser"]').val(),
                             txtPass: $('input[name="txtPass"]').val(),
-                            type: 'employee',
+                            type: 'admin',
                             token: token
                         },
                         success: function (response) {

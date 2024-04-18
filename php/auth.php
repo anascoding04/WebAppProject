@@ -1,6 +1,6 @@
 <?php
 
-require_once("./_connect.php");
+require("_connect.php");
 
 if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']))
 {
@@ -18,16 +18,22 @@ if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']))
 //     die("You are a bot!");
 // }
 
-$username = $_POST['txtUser'];
+$ID = $_POST['txtUser'];
 $password = $_POST['txtPass'];
+$type = $_POST['type'];
 
-$SQL = "SELECT * FROM `users` WHERE `username` = ?";
+if ($type == 'employee'){
+    $SQL = "SELECT * FROM `Employees` WHERE `ID` = ? ";
+} else if ($type == 'admin') {
+    $SQL = "SELECT * FROM `Admin` WHERE `ID` = ?";
+}
+
 
 //Prepares the SQL statement for execution.
 $stmt = mysqli_prepare($connect, $SQL);
 
-//Binds the username to the prepared statement as parameters.
-mysqli_stmt_bind_param($stmt, 's', $username);
+//Binds the ID to the prepared statement as parameters.
+mysqli_stmt_bind_param($stmt, 's', $ID);
 
 //Executes the prepared query.
 mysqli_stmt_execute($stmt);
@@ -39,15 +45,14 @@ if (mysqli_num_rows($result) == 1)
 {
     $USER = mysqli_fetch_assoc($result);
 
-    if (password_verify($password, $USER['password']))
+    if (password_verify($password, $USER['Password']))
     {
         // echo "Welcome to the system " . $USER['firstName'];
 
         session_start();
-
-        $_SESSION['userID'] = $USER['userID'];
-        $_SESSION['firstName'] = $USER['firstName'];
-        $_SESSION['lastName'] = $USER['lastName'];
+        $_SESSION['loggedin'] = true;
+        $_SESSION['ID'] = $USER['ID'];
+        $_SESSION['FirstName'] = $USER['FirstName'];
 
         // header("Location: ../dashboard.php");
 
@@ -57,4 +62,6 @@ if (mysqli_num_rows($result) == 1)
     }
 }
 
-die("Invalid username or password.");
+die("Invalid email or password.");
+
+?>

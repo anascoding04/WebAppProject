@@ -8,3 +8,5 @@ $password = "Zqxf97!37";
 $connect = mysqli_connect($host, $username, $password, $database);
 
 if (!$connect) die("Unable to connect to the database.");
+
+?>
