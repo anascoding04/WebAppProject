@@ -1,6 +1,6 @@
 <?php
 
-include('../php/check_login.php');
+include('../php/check_login_admin.php');
 
 $ID = $_GET['ID'];
 
@@ -82,6 +82,24 @@ $ID = $_GET['ID'];
         .launch-button:hover { 
             background-color: #a6e1e3;
         }
+        .delete-button {
+            display: block;
+            width: 100%;
+            max-width: 150px;
+            margin: 20px auto 0;
+            padding: 15px;
+            background-color: #ff0808;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+            color: #333333;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .delete-button:hover { 
+            background-color: #fa6969;
+        }
         .menu-button:hover { 
             background-color: #a6e1e3;
         }
@@ -121,6 +139,8 @@ $ID = $_GET['ID'];
 
 <button id="edit-button" class="launch-button">Edit Details</button>
 
+<button id="delete-button" class="delete-button">Delete User</button>
+
 </body>
 </html>
 
@@ -130,6 +150,9 @@ $ID = $_GET['ID'];
         // Redirect to the constructed URL
         window.location.href = './dashboard.php';
     }
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var ID = urlParams.get('ID');
 
     $(document).ready(function() {
         // Function to fetch user details when the page loads
@@ -158,10 +181,6 @@ $ID = $_GET['ID'];
                 }
             });
         }
-
-        // Get the ID from the URL query string
-        var urlParams = new URLSearchParams(window.location.search);
-        var ID = urlParams.get('ID');
         
         // Fetch user details when the page loads
         if (ID) {
@@ -185,6 +204,29 @@ $ID = $_GET['ID'];
         // Redirect to the edit page with the ID parameter
         editUserDetails(ID);
     });
+
+
+    $('#delete-button').click(function() {
+            if (confirm("Are you sure you want to delete this user?")) {
+                // If user confirms deletion, proceed with AJAX request
+                $.ajax({
+                    url: '../php/deleteUser.php',
+                    type: 'POST',
+                    data: { ID: ID }, // Send ID as data in the request body
+                    dataType: 'json',
+                    success: function(response) {
+                        // Handle success response
+                        console.log(response.message);
+                        // Redirect to dashboard or any other appropriate page
+                        window.location.href = './dashboard.php';
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
 
 
 </script>

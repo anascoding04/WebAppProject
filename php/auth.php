@@ -7,16 +7,16 @@ if (!isset($_POST['txtUser']) || !isset($_POST['txtPass']))
     die("Incorrect details");
 }
 
-// $captcha = $_POST['token'];
-// $secretKey = '6Ld0KZ4pAAAAAAkMdj4K12rJu1bEOO16PDXbu2Oa';
-// $reCAPTCHA = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha)));
+$captcha = $_POST['token'];
+$secretKey = '6Ld0KZ4pAAAAAAkMdj4K12rJu1bEOO16PDXbu2Oa';
+$reCAPTCHA = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha)));
 
-// var_dump($reCAPTCHA);
+var_dump($reCAPTCHA);
 
-// if ($reCAPTCHA->score <= 0.3)
-// {
-//     die("You are a bot!");
-// }
+if ($reCAPTCHA->score <= 0.3)
+{
+    die("You are a bot!");
+}
 
 $ID = $_POST['txtUser'];
 $password = $_POST['txtPass'];
@@ -50,7 +50,14 @@ if (mysqli_num_rows($result) == 1)
         // echo "Welcome to the system " . $USER['firstName'];
 
         session_start();
-        $_SESSION['loggedin'] = true;
+        if ($type == 'employee'){
+            $_SESSION['employee_loggedin'] = true;
+            $_SESSION['admin_loggedin'] = false;
+        } else if ($type == 'admin') {
+            $_SESSION['admin_loggedin'] = true;
+            $_SESSION['employee_loggedin'] = false;
+        }
+        
         $_SESSION['ID'] = $USER['ID'];
         $_SESSION['FirstName'] = $USER['FirstName'];
 

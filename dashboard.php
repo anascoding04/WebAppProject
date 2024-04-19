@@ -1,6 +1,6 @@
 <?php
 
-include('./php/check_login.php');
+include('./php/check_login_employee.php');
 
 ?>
 
@@ -79,7 +79,7 @@ include('./php/check_login.php');
 <body>
 
 <header>
-    <button class="menu-button">All Courses</button>
+    <button id="all-btn" class="menu-button">All Courses</button>
     <button id="logout-btn" class="menu-button">Logout</button>
 </header>
 
@@ -91,9 +91,6 @@ include('./php/check_login.php');
 </div>
 
 
-<div class="footer">
-    <a href="#">View all available courses</a>
-</div>
 
 
 <script>
@@ -113,6 +110,11 @@ include('./php/check_login.php');
                     console.error('Logout error:', error);
                 }
             });
+        });
+
+
+        $('#all-btn').click(function() {
+            window.location.href = './allCourses.php';
         });
     });
 

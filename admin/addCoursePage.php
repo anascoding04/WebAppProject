@@ -1,6 +1,6 @@
 <?php
 
-include('../php/check_login.php');
+include('../php/check_login_admin.php');
 
 ?>
 
@@ -126,6 +126,12 @@ include('../php/check_login.php');
             var availableSeats = $('#availableSeats').val();
             var courseDescription = $('#courseDescription').val();
 
+            // Client-side validation to ensure availableSeats is less than or equal to maxAttendees
+            if (parseInt(availableSeats) > parseInt(maxAttendees)) {
+                alert("Available seats cannot exceed Max attendees.");
+                return; // Stop further processing
+            }
+
             // Send form data using AJAX
             $.ajax({
                 url: '../php/addCourse.php',
@@ -158,6 +164,7 @@ include('../php/check_login.php');
             });
         });
     });
+
 </script>
 
 </body>

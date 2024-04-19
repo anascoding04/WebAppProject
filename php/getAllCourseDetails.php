@@ -2,11 +2,10 @@
 require("_connect.php");
 
 
-$EmployeeID = $_SESSION['ID'];
+$courseID = $_GET['courseID'];
 
 $SQL = "SELECT * FROM Course
-        INNER JOIN Enrolment ON Course.CourseID = Enrolment.CourseID
-        WHERE Enrolment.EmployeeID = ?";
+        WHERE Course.CourseID = ?";
 
 $stmt = mysqli_prepare($connect, $SQL);
 
@@ -25,9 +24,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 if ($result) {
-    // Initialize course buttons HTML
-    $courseButtonsHTML = '';
-
+    
     // Check if the user is enrolled in any courses
     if (mysqli_num_rows($result) > 0) {
         // Generate HTML for course buttons
@@ -40,7 +37,7 @@ if ($result) {
             $availableSeats = $row['AvailableSeats'];
             $courseDescription = $row['CourseDescription'];
 
-            $courseButtonsHTML .= "<button class='course-button' onclick=\"redirectToCourse('$courseID', '$courseName', '$courseDate', '$courseDuration', '$maxAttendees', '$availableSeats', '$courseDescription')\">$courseName</button>";
+            redirectToCourse($courseID, $courseName, $courseDate, $courseDuration, $maxAttendees, $availableSeats, $courseDescription);
         }
     } else {
         // Display message if the user is not enrolled in any courses
@@ -68,7 +65,7 @@ mysqli_close($connect);
     function redirectToCourse(courseID, courseName, courseDate, courseDuration, maxAttendees,
                                 availableSeats, courseDescription) {
         // Construct the URL with the courseID as a query parameter
-        var coursePage = './courseDetails.php?courseID=' + courseID + '&courseName=' + courseName + '&courseDate=' + courseDate + '&courseDuration=' + courseDuration + '&maxAttendees=' + maxAttendees + '&availableSeats=' + availableSeats + '&courseDescription=' + courseDescription + '&courseType=' + 'enrolled';
+        var coursePage = './courseDetails.php?courseID=' + courseID + '&courseName=' + courseName + '&courseDate=' + courseDate + '&courseDuration=' + courseDuration + '&maxAttendees=' + maxAttendees + '&availableSeats=' + availableSeats + '&courseDescription=' + courseDescription;
         // Redirect to the constructed URL
         window.location.href = coursePage; // Use coursePage variable here
     }
